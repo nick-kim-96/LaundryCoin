@@ -30,17 +30,17 @@ class Blockchain:
         return Block(nextIndex, nextHash, previousBlock.hash, nextTimestamp, blockData)
 
     def isValidNewBlock(self, newBlock, previousBlock):
-        if(not self.isValidBlockStructure(newBlock)):
+        if not self.isValidBlockStructure(newBlock):
             print('invalid structure')
             return False
 
-        if(previousBlock.index + 1 != newBlock.index):
+        if previousBlock.index + 1 != newBlock.index:
             print('invalid index')
             return False
-        elif(previousBlock.hash != newBlock.previousHash):
+        elif previousBlock.hash != newBlock.previousHash:
             print('invalid previoushash')
             return False
-        elif(self.calculateHashForBlock(newBlock) != newBlock.hash):
+        elif self.calculateHashForBlock(newBlock) != newBlock.hash:
             print('invalid hash')
             return False
         return True
@@ -61,13 +61,28 @@ class Blockchain:
         def isValidGenesis(block):
             return block is self.genesisBlock
 
-        if(not isValidGenesis(chain[0])):
+        if not isValidGenesis(chain[0]):
             return False
 
         for i in range(1, len(chain)):
-            if(not self.isValidNewBlock(chain[i], chain[i-1])):
+            if not self.isValidNewBlock(chain[i], chain[i - 1]):
                 return False
         return True
+
+    def addBlock(self, newBlock):
+        if self.isValidNewBlock(newBlock, self.blockchain[-1]):
+            self.blockchain.append(newBlock)
+            return True
+        return False
+
+    def replaceChain(self, newChain):
+        if self.isValidChain(newChain) and len(newChain) > len(self.blockchain):
+            print('Received blockchain is valid. Replacing current blockchain with received blockchain.')
+            self.blockchain = newChain
+            return True
+        else:
+            print('Received blockchain is invalid.')
+            return False
 
 def main():
     myChain = Blockchain()
@@ -76,6 +91,9 @@ def main():
     myChain.blockchain.append(myChain.generateNextBlock('Block 2'))
     myChain.blockchain.append(myChain.generateNextBlock('Block 3'))
     print(myChain.isValidChain(myChain.blockchain))
+    myChain.addBlock(myChain.generateNextBlock('Block 4'))
+    print(myChain.isValidChain(myChain.blockchain))
+
 
 
 if __name__ == '__main__':
