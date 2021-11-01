@@ -7,7 +7,7 @@ class Block:
         :param index: (int)
         :param hash: (String)
         :param previousHash: (String)
-        :param timestamp: (int)
+        :param timestamp: (float)
         :param data: (String)
         """
         self.index = index
@@ -15,9 +15,3 @@ class Block:
         self.previousHash = previousHash
         self.timestamp = timestamp
         self.data = data
-
-    """
-    def calculateHash(self):
-        return calculateHash(self.index, self.previousHash, self.timestamp, self.data)
-    """
-
