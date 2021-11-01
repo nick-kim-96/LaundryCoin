@@ -29,11 +29,3 @@ def calculateHash(index, previousHash, timestamp, data):
     :return: (String) crpytographic hash of a block.
     """
     return hashlib.sha256((str(index) + previousHash + str(timestamp) + data).encode('utf-8')).hexdigest()
-
-
-def main():
-    testBlock = Block(1, 'testBlock', 'previousTestBlock', 123, 'test')
-    print(testBlock.calculateHash())
-
-if __name__ == '__main__':
-    main()
