@@ -6,7 +6,8 @@ import p2pnetwork
 
 class Node(threading.Thread):
     """
-    An instance of a node that is able to connect to and accept connections from other nodes.
+    An instance of a node that is able to connect to and accept connections from other nodes. Each node is part of a
+    p2p network and has a copy of the blockchain.
     """
     def __init__(self, port):
 
@@ -16,3 +17,11 @@ class Node(threading.Thread):
         self.blockchain = Blockchain()
         self.p2p = p2pnetwork(self, socket)
 
+    def setBlockchain(self, newChain):
+        return self.blockchain.replaceChain(newChain)
+
+    def getBlockchain(self):
+        return self.blockchain
+
+    def addBlock(self, newBlock):
+        return self.blockchain.addBlock(newBlock)
