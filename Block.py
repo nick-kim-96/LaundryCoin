@@ -17,10 +17,9 @@ class Block:
         self.data = data
 
     def __str__(self):
-        return 'Block {}:\n-data: {}\n-timestamp: {}\n-hash: {}\n-prev_hash: {}\n'.format(
-            self.index,
-            self.data,
-            self.timestamp,
-            self.hash,
-            self.previousHash
-        )
+        temp = 'Block {index}:\n-hash: {hash}\n-previousHash: {previousHash}\n-timestamp: {timestamp}\n-data: {data}\n'
+        return temp.format(index = self.index,
+            hash = self.hash,
+            previousHash = self.previousHash,
+            timestamp = self.timestamp,
+            data = self.data)
