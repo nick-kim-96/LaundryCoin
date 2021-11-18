@@ -24,11 +24,12 @@ class Server:
 
                 path = data.split()[1]
 
-                if path == b'/':
+                if path == b'/' or path == b'/blocks':
                     clientSock.send(b'HTTP/1.0 200 OK \r\n\r\n')
                     for block in self.node.getBlockchain():
                         clientSock.send(str(block).encode())
 
+                clientSock.close()
             except IOError:
                 break
 
@@ -38,6 +39,7 @@ def main():
     node = Node.Node(1)
     server = Server(node, 2)
     threading.Thread(target=server.run, args=(None,)).start()
+    #node.run()
     print('Node running on port {}'.format(2))
 
 

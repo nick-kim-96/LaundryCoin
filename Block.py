@@ -15,3 +15,12 @@ class Block:
         self.previousHash = previousHash
         self.timestamp = timestamp
         self.data = data
+
+    def __str__(self):
+        return 'Block {}:\n-data: {}\n-timestamp: {}\n-hash: {}\n-prev_hash: {}\n'.format(
+            self.index,
+            self.data,
+            self.timestamp,
+            self.hash,
+            self.previousHash
+        )
