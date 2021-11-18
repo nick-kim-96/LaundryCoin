@@ -1,5 +1,6 @@
 import socket
 import Node
+import p2pnetwork
 import threading
 
 class Server:
@@ -16,19 +17,22 @@ class Server:
         self.socket.listen(1)
 
         while True:
-            conn_socket, addr = self.socket.accept()
             try:
-                message = conn_socket.recv(1024)
-                endpoint = message.split()[1]
-                if endpoint == b'/' or endpoint == b'/blocks':
-                    conn_socket.send(b'HTTP/1.0 200 OK\r\n\r\n')
-                    for block in self.node.getBlockchain():
-                        conn_socket.send(str(block).encode())
+                clientSock, clientAddr = self.socket.accept()
+                clientSock.settimeout(None)
+                data = clientSock.recv(1024)
 
-                conn_socket.close()
+                path = data.split()[1]
+
+                if path == b'/':
+                    clientSock.send(b'HTTP/1.0 200 OK \r\n\r\n')
+                    for block in self.node.getBlockchain():
+                        clientSock.send(str(block).encode())
+
             except IOError:
-                conn_socket.close()
-        control_socket.close()
+                break
+
+        socket.close()
 
 def main():
     node = Node.Node(1)
