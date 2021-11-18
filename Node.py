@@ -24,7 +24,7 @@ class Node(threading.Thread):
         return self.blockchain.replaceChain(newChain)
 
     def getBlockchain(self):
-        return self.blockchain
+        return self.blockchain.blockchain
 
     def addBlock(self, newBlock):
         return self.blockchain.addBlock(newBlock)
