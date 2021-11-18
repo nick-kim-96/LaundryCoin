@@ -17,13 +17,13 @@ class p2pnetwork():
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #Using IPv4 protocol with TCP
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # port will be immediately reusable
         s.bind(('', port))
-        socket.listen(5)
+        s.listen(5)
         return s
 
     def mainLoop(self):
         s = self.setServerSocket(self.port)
         s.settimeout(2)
-_
+
         while True:
             try:
                 clientSock, clientAddr = s.accept()
@@ -50,3 +50,4 @@ _
         if not peer in self.peers:
             threading.Thread(
                 target= self.sendMessage, args= (peer, Message(Type.QUERY_LATEST_BLOCK, '', ('', self.port)))).start()
+

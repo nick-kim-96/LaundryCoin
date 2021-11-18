@@ -14,8 +14,11 @@ class Node(threading.Thread):
         super(Node, self).__init__()
 
         self.port = port
-        self.blockchain = Blockchain()
-        self.p2p = p2pnetwork(self, socket)
+        self.blockchain = Blockchain.Blockchain()
+        #self.p2p = p2pnetwork.p2pnetwork(self, socket)
+
+    def run(self):
+        self.p2p.mainLoop()
 
     def setBlockchain(self, newChain):
         return self.blockchain.replaceChain(newChain)

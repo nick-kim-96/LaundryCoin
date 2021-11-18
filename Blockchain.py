@@ -84,17 +84,3 @@ class Blockchain:
             print('Received blockchain is invalid.')
             return False
 
-def main():
-    myChain = Blockchain()
-    print(myChain.isValidChain(myChain.blockchain))
-    myChain.blockchain.append(myChain.generateNextBlock('Block 1'))
-    myChain.blockchain.append(myChain.generateNextBlock('Block 2'))
-    myChain.blockchain.append(myChain.generateNextBlock('Block 3'))
-    print(myChain.isValidChain(myChain.blockchain))
-    myChain.addBlock(myChain.generateNextBlock('Block 4'))
-    print(myChain.isValidChain(myChain.blockchain))
-
-
-
-if __name__ == '__main__':
-    main()
