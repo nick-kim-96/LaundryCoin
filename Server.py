@@ -5,7 +5,7 @@ import threading
 
 class Server:
 
-    def __init__(self,node, port):
+    def __init__(self, node, port):
         self.port = port
         self.socket = None
         self.node = node
@@ -28,6 +28,10 @@ class Server:
                     clientSock.send(b'HTTP/1.0 200 OK \r\n\r\n')
                     for block in self.node.getBlockchain():
                         clientSock.send(str(block).encode())
+                elif path == b'/mine':
+                    clientSock.send(b'HTTP1.0 200 OK \r\n\r\n')
+                    new_block = self.node.createBlock('hi')
+                    clientSock.send(str(new_block).encode())
 
                 clientSock.close()
             except IOError:

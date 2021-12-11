@@ -26,5 +26,8 @@ class Node(threading.Thread):
     def getBlockchain(self):
         return self.blockchain.blockchain
 
+    def createBlock(self, data):
+        return self.blockchain.generateNextBlock(data)
+
     def addBlock(self, newBlock):
         return self.blockchain.addBlock(newBlock)
