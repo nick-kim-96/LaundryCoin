@@ -32,6 +32,10 @@ class Server:
                     clientSock.send(b'HTTP1.0 200 OK \r\n\r\n')
                     new_block = self.node.createBlock('hi')
                     clientSock.send(str(new_block).encode())
+                elif path == b'/peers':
+                    clientSock.send(b'HTTP1.0 200 OK \r\n\r\n')
+                    peers = ['{}:{}'.format(key[0], key[1]) for key in self.node.p2p.peers.keys()]
+                    clientSock.send(('Connected peers:\n' + '\n'.join(peers)).encode())
 
                 clientSock.close()
             except IOError:
@@ -43,8 +47,8 @@ def main():
     node = Node.Node(1)
     server = Server(node, 2)
     threading.Thread(target=server.run, args=(None,)).start()
-    #node.run()
     print('Node running on port {}'.format(2))
+    node.run()
 
 
 

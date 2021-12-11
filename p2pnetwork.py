@@ -22,7 +22,7 @@ class p2pnetwork():
 
     def mainLoop(self):
         s = self.setServerSocket(self.port)
-        s.settimeout(2)
+        #s.settimeout(5)
 
         while True:
             try:
@@ -51,3 +51,17 @@ class p2pnetwork():
             threading.Thread(
                 target= self.sendMessage, args= (peer, Message(Type.QUERY_LATEST_BLOCK, '', ('', self.port)))).start()
 
+
+
+    def sendMessage(self, peer, data):
+        try:
+            if not peer in self.peers or True:
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.connect(peer)
+                self.peers[peer] = s
+            else:
+                s = self.peers[peer]
+                s.connect(peer)
+            s.send(pickle.dumps(data))
+        except ConnectionRefusedError:
+            pass
